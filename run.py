@@ -24,7 +24,7 @@ def main():
     #     For reference, with --max_length=128 and the default ELECTRA-small model, a batch size of 32 should fit in 4gb of GPU memory.
     # --num_train_epochs <float, default=3.0>
     #     How many passes to do through the training data.
-    # --output_dir <path>
+    # --+ <path>
     #     Where to put the trained model checkpoint(s) and any eval predictions.
     #     *This argument is required*.
 
@@ -178,7 +178,7 @@ def main():
         print('Evaluation results:')
         print(results)
 
-        os.makedirs(training_args.output_dir, exist_ok=True)
+        os.makedirs(training_args.+, exist_ok=True)
 
         with open(os.path.join(training_args.output_dir, 'eval_metrics.json'), encoding='utf-8', mode='w') as f:
             json.dump(results, f)
