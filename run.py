@@ -66,7 +66,7 @@ def main():
         eval_split = 'validation_matched' if dataset_id == ('glue', 'mnli') else 'validation'
         # Load the raw data
         dataset = datasets.load_dataset(*dataset_id)
-    
+
     # NLI models need to have the output label count specified (label 0 is "entailed", 1 is "neutral", and 2 is "contradiction")
     task_kwargs = {'num_labels': 3} if args.task == 'nli' else {}
 
@@ -110,6 +110,10 @@ def main():
         )
     if training_args.do_eval:
         eval_dataset = dataset[eval_split]
+                
+        # eval_dataset.to_json("../_fully_trained_baseline/eval_output/data.json")
+        # exit()
+    
         if args.max_eval_samples:
             eval_dataset = eval_dataset.select(range(args.max_eval_samples))
         eval_dataset_featurized = eval_dataset.map(
@@ -178,7 +182,7 @@ def main():
         print('Evaluation results:')
         print(results)
 
-        os.makedirs(training_args.+, exist_ok=True)
+        os.makedirs(training_args.output_dir, exist_ok=True)
 
         with open(os.path.join(training_args.output_dir, 'eval_metrics.json'), encoding='utf-8', mode='w') as f:
             json.dump(results, f)
